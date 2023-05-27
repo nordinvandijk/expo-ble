@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "checkJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "./app/*"
+      ]
+    },
+    "jsx": "react-native",
+    "types": ["nativewind/types", "webpack-env"]
+  },
+  "include": ["expo-plugins", "src", "*.ts", "**/*.js", "index.tsx", "app/_layout.tsx", "app/index.tsx"],
+  "exclude": ["node_modules", "*.config.js"],
+  "extends": "expo/tsconfig.base"
+}
