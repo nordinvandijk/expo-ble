@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import { Button, Text, TouchableOpacity, View } from "react-native";
+import { Switch, Text, TouchableOpacity, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import {
@@ -12,6 +12,7 @@ import {
 } from "react-native-ble-plx";
 
 import { Stack } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   const ble = useMemo(() => new BleManager(), []);
@@ -65,38 +66,44 @@ export default function App() {
   };
 
   return (
-    <View className="h-full w-full">
-      <Stack.Screen options={{ title: "Home Page" }} />
+    <SafeAreaView className="bg-neutral-900" edges={["bottom", "left", "right"]}>
+      <View className="h-full w-full">
+        <Stack.Screen options={{ title: connectedDevice ? connectedDevice.name as string : "Connect to a device" }} />
 
-      <Text className="text-center text-xl font-bold py-2">
-        {connectedDevice?.name} {connectedDevice?.manufacturerData}
-      </Text>
-
-      <View className="flex flex-row items-center justify-evenly py-2">
-        {!isScanning ? (
-          <Button title="Start Scan" onPress={() => scanForPeripherals()} />
-        ) : (
-          <Button title="Stop Scan" onPress={stopScan} />
-        )}
-      </View>
-      <View className="mx-2">
-        <View className="w-full h-full">
-          <FlashList
-            data={allDevices}
-            renderItem={(x) => (
-              <View className="border py-1 px-2 rounded-md my-1">
-                <TouchableOpacity onPress={() => connectToDevice(x.item)}>
-                  <Text className="font-bold text-lg">
-                    {x.item.name ? x.item.name : "Unknown"}
-                  </Text>
-                  <Text>{x.item.id}</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-            estimatedItemSize={100}
-          />
+        <View className="mx-2">
+          <View className="w-full h-full">
+            <FlashList
+              ListHeaderComponent={() => (
+                  <View className="flex flex-row items-center justify-between px-4 py-3 my-3 bg-neutral-700 rounded-lg">
+                    <Text className="text-lg font-semibold text-white">BLE Scanning</Text>
+                    <Switch
+                      trackColor={{ false: "#777", true: "#FF69B4" }}
+                      thumbColor={"#f4f3f4"}
+                      ios_backgroundColor="#777"
+                      onValueChange={(value) =>
+                        value ? scanForPeripherals() : stopScan()
+                      }
+                      value={isScanning}
+                    />
+                  </View>
+              )}
+              data={allDevices}
+              showsVerticalScrollIndicator={false}
+              renderItem={(x) => (
+                <View className="py-1 px-2 rounded-md my-1">
+                  <TouchableOpacity onPress={() => connectToDevice(x.item)}>
+                    <Text className="font-bold text-lg text-white">
+                      {x.item.name ? x.item.name : "Unknown"}
+                    </Text>
+                    <Text className="text-white">{x.item.id}</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              estimatedItemSize={100}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

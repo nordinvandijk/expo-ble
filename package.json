@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "main": "index.tsx",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "start": "expo start --dev-client",
+    "android": "eas build --profile development --platform android",
+    "ios": "eas build --profile development --platform ios"
   },
   "dependencies": {
     "@config-plugins/react-native-ble-plx": "^6.0.0",
