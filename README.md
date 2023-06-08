@@ -4,13 +4,18 @@ by Nordin van Dijk
 
 ## Installation
 
-Clone this repository and just simply install
+First of all. Get the code by cloning or forking this repository.
+
+Then install the dependencies by running
 
 ```bash
 npm install
 ```
 
-## Running
+Finally, you have to make some adjustments to the app configuration (app.config.ts)
+
+
+## Building development client
 
 We use a device as devlopment client because BLE is not available on simulators.
 
@@ -39,4 +44,12 @@ Create a development build and upload it to your device by running:
 npm run android
 ```
 
+## Running
 
+Start the expo server
+
+```bash
+npm run start
+```
+
+Wait until the server is up and running. Then open the app on your device and connect to the server.
